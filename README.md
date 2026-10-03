@@ -33,3 +33,4 @@ Webカメラの位置をスクリーンの上に置くことを想定（ノー�
 
 
 # 参考文献
+https://aismiley.co.jp/ai_news/unsupervised-learning/ 2026-10-03
