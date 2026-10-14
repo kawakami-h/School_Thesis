@@ -49,7 +49,12 @@ while cap.isOpened():
     if results.face_landmarks:
         for face_landmarks in results.face_landmarks:
             # 478個のランドマークを取得
-            pass
+            # 取得したランドマークから目やに虹彩の座標を描画する
+            for landmark in face_landmarks:
+                x = int(landmark.x * w)
+                y = int(landmark.y * h)
+                # 全てのランドマークを描画する場合：
+                cv2.circle(frame, (x, y), 1, (0, 255, 0), -1)
 
     cv2.imshow("Eye Tracking Test", frame)
     if cv2.waitKey(1) & 0xFF == ord("q"):
