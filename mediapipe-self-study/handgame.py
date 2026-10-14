@@ -37,8 +37,8 @@ circle_y = random.randint(100, 400)
 circle_radius = 20
 
 # カメラからの映像をキャプチャ
-# cap = cv2.VideoCapture(1)
-cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 
 # openCVのウィンドウを作成
 cv2.namedWindow('Hand Game', cv2.WINDOW_NORMAL)

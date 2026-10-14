@@ -75,12 +75,24 @@ Backspace, Ctrl + Z, delete, Crtl + X, Ctrl + Y, Ctrl + Shift + Z, Ctrl + Backsp
 処理の安定化も加味して、一旦計測しない
 
 #### 画像データ
+mediapipeのfaceを利用して、それぞれの位置を検出し計算を行う.
 ##### 眼
 ###### 瞬き回数
 5分以内に瞬きした回数を計測する
 
-###### 視線が一点に集中している時間
 
+###### 視線が一点に集中している時間
+眼球の真ん中が指定範囲内でどれだけ動いていないか（輪郭との距離によって決定するのがよさそう）
+
+###### 眼の開き具合
+upper_centerとlower_centerとの距離によって計測する.計測した値は平均を取る.
+
+##### 顔
+###### 向き　※なし
+正面を両目の距離が一番遠いときのものと定義して、そこからどの方向を向いているかを計測できる.（平均の取り方が難しいため、一旦なし）
+###### 姿勢の移動
+輪郭が規定値（y）より動いた回数を姿勢を直した回数と定義するのがよさそう。または、yの平均を入力する（猫背などなど）
 
 # 参考文献
-https://aismiley.co.jp/ai_news/unsupervised-learning/ 2026-10-03
+教師なし学習について（クラスタリング）：https://aismiley.co.jp/ai_news/unsupervised-learning/ 2026-10-03
+MediaPipe Landmark Points：https://www.sanderdesnaijer.com/blog/mediapipe-face-mesh-landmarks  2026-10-14
