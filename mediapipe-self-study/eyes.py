@@ -30,13 +30,24 @@ cap = cv2.VideoCapture(0)
 start_time = time_base = cv2.getTickCount()
 
 Left_Upper_eyelid = [246, 161, 160, 159, 158, 157, 173]
+Left_Upper_center = [159]
 Left_Lower_eyelid = [33, 7, 163, 144, 145, 153, 154, 155, 133]
+Left_Lower_center = [145]
+Left_eyelid = Left_Upper_eyelid + Left_Lower_eyelid
 
 Right_Upper_eyelid = [466, 388, 387, 386, 385, 384, 398]
+Right_Upper_center = [386]
 Right_Lower_eyelid = [263, 249, 390, 373, 374, 380, 381, 382, 362]
+Right_Lower_center = [374]
+Right_eyelid = Right_Upper_eyelid + Right_Lower_eyelid
 
 Left_lris = [468, 469, 470, 471, 472]
 Right_lris = [473, 474, 475, 476, 477]
+
+Left_eyes = Left_eyelid + Left_lris
+Right_eyes = Right_eyelid + Right_lris
+
+eyes = Left_eyes + Right_eyes
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -59,10 +70,16 @@ while cap.isOpened():
         for face_landmarks in results.face_landmarks:
             # 478個のランドマークを取得
             # 取得したランドマークから目やに虹彩の座標を描画する
-            for landmark in face_landmarks:
+            # for landmark in face_landmarks:
+            #     x = int(landmark.x * w)
+            #     y = int(landmark.y * h)
+            #     # 全てのランドマークを描画する場合：
+            #    cv2.circle(frame, (x, y), 1, (0, 255, 0), -1)
+
+            for idx in eyes:
+                landmark = face_landmarks[idx]
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
-                # 全てのランドマークを描画する場合：
                 cv2.circle(frame, (x, y), 1, (0, 255, 0), -1)
 
     cv2.imshow("Eye Tracking Test", frame)
