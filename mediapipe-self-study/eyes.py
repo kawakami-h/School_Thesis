@@ -29,6 +29,15 @@ cap = cv2.VideoCapture(0)
 # cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 start_time = time_base = cv2.getTickCount()
 
+Left_Upper_eyelid = [246, 161, 160, 159, 158, 157, 173]
+Left_Lower_eyelid = [33, 7, 163, 144, 145, 153, 154, 155, 133]
+
+Right_Upper_eyelid = [466, 388, 387, 386, 385, 384, 398]
+Right_Lower_eyelid = [263, 249, 390, 373, 374, 380, 381, 382, 362]
+
+Left_lris = [468, 469, 470, 471, 472]
+Right_lris = [473, 474, 475, 476, 477]
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
