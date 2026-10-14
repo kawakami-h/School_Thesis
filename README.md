@@ -83,4 +83,5 @@ Backspace, Ctrl + Z, delete, Crtl + X, Ctrl + Y, Ctrl + Shift + Z, Ctrl + Backsp
 
 
 # 参考文献
-https://aismiley.co.jp/ai_news/unsupervised-learning/ 2026-10-03
+教師なし学習について（クラスタリング）：https://aismiley.co.jp/ai_news/unsupervised-learning/ 2026-10-03
+MediaPipe Landmark Points：https://www.sanderdesnaijer.com/blog/mediapipe-face-mesh-landmarks  2026-10-14
