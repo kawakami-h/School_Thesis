@@ -30,35 +30,35 @@ def select_camera():
     available_cameras = []
     print("利用可能なカメラを検出中...")
     for i in range(5):
-        cap_test = cv2.VidioCapture(i, cv2.CAP_DSHOW) if os.name == 'nt' else cv2.VideoCapture(i)
+        cap_test = cv2.VideoCapture(i, cv2.CAP_DSHOW) if os.name == 'nt' else cv2.VideoCapture(i)
         if cap_test.isOpened():
             ret, _ = cap_test.read()
             if ret:
                 available_cameras.append(i)
             cap_test.release()
 
-        if not available_cameras:
-            print("利用可能なカメラが見つかりませんでした。デフォルト0番を使用します。")
-            return 0
+    if not available_cameras:
+        print("利用可能なカメラが見つかりませんでした。デフォルト0番を使用します。")
+        return 0
 
-        print("\n---利用可能なカメラ一覧---")
-        for idx in available_cameras:
-            print(f"[{idx}] カメラ {idx}")
-        print("-" * 28)
+    print("\n---利用可能なカメラ一覧---")
+    for idx in available_cameras:
+        print(f"[{idx}] カメラ {idx}")
+    print("-" * 28)
 
-        while True:
-            try:
-                choice = int(input("使用するカメラの番号を入力してください："))
-                if choice in available_cameras:
-                    return choice
-                print("無効な番号です。一覧にある番号を入力してください。")
-            except ValueError:
-                ("半角の数字で入力して下さい。")
+    while True:
+        try:
+            choice = int(input("使用するカメラの番号を入力してください："))
+            if choice in available_cameras:
+                return choice
+            print("無効な番号です。一覧にある番号を入力してください。")
+        except ValueError:
+            print("半角の数字で入力して下さい。")
 
 # カメラの選択と初期化
 camera_id = select_camera()
 if os.name == 'nt':
-    cap = cv2.VideoCapture(camera_id, cv2.CAP_DSHOw)
+    cap = cv2.VideoCapture(camera_id, cv2.CAP_DSHOW)
 else:
     cap = cv2.VideoCapture(camera_id)
 
