@@ -80,7 +80,7 @@ while cap.isOpened():
             #     # 全てのランドマークを描画する場合：
             #    cv2.circle(frame, (x, y), 1, (0, 255, 0), -1)
 
-            for idx in eyes:
+            for idx in eyes_important:
                 landmark = face_landmarks[idx]
                 x = int(landmark.x * w)
                 y = int(landmark.y * h)
