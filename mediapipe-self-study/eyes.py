@@ -47,7 +47,11 @@ Right_lris = [473, 474, 475, 476, 477]
 Left_eyes = Left_eyelid + Left_lris
 Right_eyes = Right_eyelid + Right_lris
 
+Left_important = Left_Upper_center + Left_Lower_center + Left_lris
+Right_important = Right_Upper_center + Right_Lower_center + Right_lris
+
 eyes = Left_eyes + Right_eyes
+eyes_important = Left_important + Right_important
 
 while cap.isOpened():
     ret, frame = cap.read()
