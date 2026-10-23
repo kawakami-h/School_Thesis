@@ -1,0 +1,9 @@
+# Python 3.10〜3.12 推奨
+numpy
+opencv-contrib-python
+mediapipe
+pynput
+# 以下は analyze.py(クラスタリング)用
+pandas
+scikit-learn
+matplotlib
