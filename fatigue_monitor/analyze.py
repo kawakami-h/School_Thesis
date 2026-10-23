@@ -36,8 +36,8 @@ df["idle_ratio"] = df["key_idle_total_sec"] / df["duration_sec"]
 df["posture_change_per_min"] = df["posture_change_count"] / (df["obs_sec"] / 60.0)
 
 FEATURES = [
-    "typing_per_min", "correction_ratio", "max_streak_sec", "idle_ratio",
-    "work_elapsed_min", "scroll_per_min", "mouse_dist_per_min", "window_switch_per_min",
+    "typing_per_min", "correction_ratio", "continuous_work_min", "idle_ratio",
+    "scroll_per_min", "mouse_dist_per_min", "window_switch_per_min",
     "blink_per_min", "eye_open_rel", "fixation_ratio", "gaze_shift_per_min",
     "posture_change_per_min", "posture_max_hold_sec",
 ]

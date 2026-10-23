@@ -9,7 +9,15 @@ WINDOW_SEC = 300          # 集計単位(秒)。5分 = 300。テスト時は --w
 # ---------- キーボード / マウス ----------
 STREAK_GAP_SEC = 3.0      # この秒数以内に次の入力があれば「連続入力」とみなす
 KEY_IDLE_GAP_SEC = 5.0    # この秒数以上キー入力が無い時間を「入力しない時間」に加算
-SESSION_RESET_IDLE_SEC = 600  # この秒数以上、キーボードもマウスも触らなければ作業時間をリセット
+
+# 連続作業時間: 区間(WINDOW_SEC)のうち、キーボードまたはマウスを操作した秒の割合がこの値以上なら
+# 「作業していた区間」とみなして連続作業時間に加算する。下回る区間があるとリセット(休憩扱い)
+WORK_ACTIVE_RATIO = 0.3
+
+# ウィンドウ切り替え(Windows): 前面ウィンドウをこの間隔で監視し、新しいウィンドウが
+# SWITCH_CONFIRM_SEC 秒以上前面にあったら「切り替え」と数える
+FOREGROUND_POLL_SEC = 0.2
+SWITCH_CONFIRM_SEC = 0.5
 
 # 修正入力と重要度(重み)。重要度を変えたい場合はここを編集
 CORRECTION_WEIGHTS = {
@@ -46,3 +54,8 @@ POSTURE_COOLDOWN_SEC = 3.0  # 連続カウント防止
 MODEL_PATH = "models/face_landmarker.task"
 MODEL_URL = ("https://storage.googleapis.com/mediapipe-models/"
              "face_landmarker/face_landmarker/float16/1/face_landmarker.task")
+
+# ---------- 映像の保存(--save-video / 実験モードの既定) ----------
+VIDEO_SCALE = 0.5            # 保存時の縮小率(0.5 → 1280x720 を 640x360 に。容量を抑える)
+VIDEO_TIMESTAMP = True       # 映像に日時を焼き込む(CSVの区間と突き合わせるため)
+VIDEO_CODECS = [("mp4v", ".mp4"), ("MJPG", ".avi")]   # 先頭から順に試す
