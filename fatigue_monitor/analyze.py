@@ -33,13 +33,15 @@ df["scroll_per_min"] = df["scroll_count"] / m
 df["mouse_dist_per_min"] = df["mouse_distance_px"] / m
 df["window_switch_per_min"] = df["window_switch_count"] / m
 df["idle_ratio"] = df["key_idle_total_sec"] / df["duration_sec"]
-df["posture_change_per_min"] = df["posture_change_count"] / (df["obs_sec"] / 60.0)
+# 姿勢の回数は、顔を検出できた秒数あたりにそろえる(旧CSVにはface_secがないのでobs_secで代用)
+face_sec = df["face_sec"] if "face_sec" in df.columns else df["obs_sec"]
+df["posture_change_per_min"] = df["posture_change_count"] / (face_sec / 60.0)
 
 FEATURES = [
-    "typing_per_min", "correction_ratio", "max_streak_sec", "idle_ratio",
-    "work_elapsed_min", "scroll_per_min", "mouse_dist_per_min", "window_switch_per_min",
+    "typing_per_min", "correction_ratio", "continuous_work_min", "idle_ratio",
+    "scroll_per_min", "mouse_dist_per_min", "window_switch_per_min",
     "blink_per_min", "eye_open_rel", "fixation_ratio", "gaze_shift_per_min",
-    "posture_change_per_min", "posture_max_hold_sec",
+    "posture_change_per_min", "posture_max_hold_sec", "face_y_dev", "face_width_rel",
 ]
 feats = [c for c in FEATURES if c in df.columns and df[c].notna().any()]
 df = df.dropna(subset=feats).reset_index(drop=True)
