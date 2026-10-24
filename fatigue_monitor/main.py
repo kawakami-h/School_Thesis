@@ -33,10 +33,12 @@ COLUMNS = [
     "scroll_count", "mouse_click_count", "mouse_distance_px", "mouse_active_ratio",
     "window_switch_count",
     # --- カメラ ---
-    "face_detected_ratio", "obs_sec", "eye_open_baseline",
+    "face_detected_ratio", "face_sec", "obs_sec", "pose_valid_ratio", "eye_open_baseline",
     "blink_count", "blink_per_min", "eye_open_mean", "eye_open_rel",
     "fixation_total_sec", "fixation_ratio", "max_fixation_sec", "gaze_shift_per_min",
-    "posture_change_count", "posture_max_hold_sec", "face_y_mean", "face_width_mean",
+    "head_yaw_mean", "head_pitch_mean", "head_roll_mean",
+    "posture_change_count", "posture_max_hold_sec",
+    "face_y_mean", "face_width_mean", "face_y_dev", "face_width_rel",
 ]
 
 
@@ -100,6 +102,8 @@ def main():
     ap.add_argument("--no-video", action="store_true", help="(実験モードでも)映像を保存しない")
     ap.add_argument("--no-camera", action="store_true", help="--sensors input と同じ(旧オプション)")
     ap.add_argument("--no-preview", action="store_true")
+    ap.add_argument("--no-calibration", action="store_true",
+                    help="全画面キャリブレーションを行わない(起動直後の20秒で自動的に基準を決める)")
     args = ap.parse_args()
     C.WINDOW_SEC = args.window_sec
     if args.no_camera:
@@ -173,12 +177,8 @@ def main():
         with open(meta_path, "w", encoding="utf-8") as mf:
             json.dump(d, mf, ensure_ascii=False, indent=2)
 
-    # ---------- 監視の開始 ----------
+    # ---------- カメラの準備 → キャリブレーション → 入力監視の開始 ----------
     inp = None
-    if use_input:
-        from input_monitor import InputMonitor
-        inp = InputMonitor()
-        inp.start()
     cam = rec = None
     video_path = None
     try:
@@ -190,9 +190,31 @@ def main():
                 rec = VideoRecorder(f"data/{stem}")
     except Exception as e:
         print(f"[main] 開始できません: {e}")
-        if inp:
-            inp.stop()
         return
+
+    if cam is not None:
+        if args.no_calibration:
+            meta["calibration"] = {"status": "skipped"}
+        else:
+            print("\n[main] 全画面キャリブレーションを開始します(約20〜30秒)")
+            try:
+                from calibration import run_calibration
+                cal = run_calibration(cam)
+            except Exception as e:
+                print(f"[main] キャリブレーションでエラー: {e!r}")
+                cal = None
+            if cal:
+                cam.set_calibration(cal)
+                meta["calibration"] = dict(cal, status="ok")
+            else:
+                meta["calibration"] = {"status": "skipped_or_failed"}
+                print(f"[main] 起動直後の{C.CALIB_SEC}秒で自動的に基準を決めます"
+                      "(その間は目を普通に開けて画面を見てください)")
+
+    if use_input:                      # キャリブレーション中のキー操作を数えないよう、ここで開始
+        from input_monitor import InputMonitor
+        inp = InputMonitor()
+        inp.start()
     preview = cam is not None and not args.no_preview
     if preview:
         import cv2

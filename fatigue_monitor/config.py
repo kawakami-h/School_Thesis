@@ -59,3 +59,21 @@ MODEL_URL = ("https://storage.googleapis.com/mediapipe-models/"
 VIDEO_SCALE = 0.5            # 保存時の縮小率(0.5 → 1280x720 を 640x360 に。容量を抑える)
 VIDEO_TIMESTAMP = True       # 映像に日時を焼き込む(CSVの区間と突き合わせるため)
 VIDEO_CODECS = [("mp4v", ".mp4"), ("MJPG", ".avi")]   # 先頭から順に試す
+
+# ---------- 顔の向き(頭の向き) ----------
+# キャリブレーションで正面(中央の点)を見たときの向きを基準とし、そこからの差がこの角度を超えたフレームは
+# 瞬き・眼の開き具合・視線の集計に使わない(姿勢の指標には使う)
+YAW_MAX_DEG = 20.0        # 左右
+PITCH_MAX_DEG = 20.0      # 上下
+ROLL_MAX_DEG = 25.0       # 傾き
+MIN_EYE_OBS_SEC = 5.0     # 向きが有効だった時間がこれ未満の区間は、瞬き・視線の指標を空欄にする
+
+# ---------- 5点キャリブレーション(全画面) ----------
+CALIB_POINT_SETTLE_SEC = 1.0    # 点が出てから、目が追いつくまで待つ(この間は使わない)
+CALIB_POINT_COLLECT_SEC = 2.0   # その後、この秒数のデータを使う
+CALIB_MIN_POINT_FRAMES = 10     # 点ごとに必要な最低フレーム数(中央の点が足りないと失敗)
+CALIB_PREP_OK_SEC = 2.0         # 準備チェックがこの秒数続けてOKなら自動で開始
+CALIB_BRIGHTNESS_MIN = 50       # 顔の明るさ(0〜255)の許容範囲
+CALIB_BRIGHTNESS_MAX = 210
+CALIB_FACE_WIDTH_MIN = 0.12     # 顔の幅 / 画像の幅 の許容範囲(遠すぎ/近すぎの判定)
+CALIB_FACE_WIDTH_MAX = 0.45
