@@ -1,0 +1,57 @@
+{
+  "user": "test",
+  "mode": "experiment",
+  "sensors": "both",
+  "start": "2026-10-23T14:16:31",
+  "window_sec": 300,
+  "csv": "test_20261023_141631.csv",
+  "video": "test_20261023_141631.mp4",
+  "config": {
+    "WINDOW_SEC": 300,
+    "STREAK_GAP_SEC": 3.0,
+    "KEY_IDLE_GAP_SEC": 5.0,
+    "WORK_ACTIVE_RATIO": 0.3,
+    "FOREGROUND_POLL_SEC": 0.2,
+    "SWITCH_CONFIRM_SEC": 0.5,
+    "CORRECTION_WEIGHTS": {
+      "backspace": 1.0,
+      "delete": 1.0,
+      "ctrl+z": 1.0,
+      "ctrl+x": 1.0,
+      "ctrl+y": 1.0,
+      "ctrl+shift+z": 1.0,
+      "ctrl+backspace": 1.0
+    },
+    "CAMERA_INDEX": 0,
+    "CAMERA_WIDTH": 1280,
+    "CAMERA_HEIGHT": 720,
+    "TARGET_FPS": 20,
+    "CALIB_SEC": 20,
+    "MIN_FACE_RATIO": 0.5,
+    "BLINK_THRESHOLD_RATIO": 0.65,
+    "BLINK_MAX_SEC": 0.8,
+    "GAZE_RADIUS": 0.06,
+    "FIXATION_MIN_SEC": 1.0,
+    "POSTURE_MOVE_THR": 0.04,
+    "POSTURE_COOLDOWN_SEC": 3.0,
+    "MODEL_PATH": "models/face_landmarker.task",
+    "MODEL_URL": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+    "VIDEO_SCALE": 0.5,
+    "VIDEO_TIMESTAMP": true,
+    "VIDEO_CODECS": [
+      [
+        "mp4v",
+        ".mp4"
+      ],
+      [
+        "MJPG",
+        ".avi"
+      ]
+    ]
+  },
+  "fatigue_before": 2,
+  "consent_confirmed": true,
+  "end": "2026-10-23T14:32:37",
+  "fatigue_after": 3,
+  "memo": "おなか痛い（関係ない）"
+}
